@@ -21,30 +21,29 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
-{% block messages %}
-{% if messages %}
-  {% for msg in messages %}
-    <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
-      <button type="button" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
-      {{msg.tags|title}}: {{msg.message}}
-    </div>
-  {% endfor %}
-{% endif %}
-{% endblock messages %}
 {% block title %}
-Apply to join Cloudanalogy family
+Cloudanalogy Career
 {% endblock %}
 {% block breadcrumbs %}
 {% endblock %}
-          {% block sidebar_menu %}
-{block }
-  <div class="container-fluid">
+{% block sidebar_menu %}
+<div class="container-fluid">
     <div class="row">
-            <div id="sidebar-menu" class="col-xs-6 col-sm-3 col-md-2 sidebar-menu">
-              {% block branding %}
+        <div id="sidebar-menu" class="col-xs-6 col-sm-3 col-md-2 sidebar-menu">
+            {% block branding %}
                 <h3>APPLY HERE</h3>
-              {% endblock branding %}
+            {% endblock branding %}
+        </div>
+        {% block messages %}
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+              <button type="button" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+              {{msg.tags|title}}: {{msg.message}}
             </div>
-          {% endblock sidebar_menu %}
+          {% endfor %}
+        {% endif %}
+        {% endblock messages %}
     </div>
-  </div>
+</div>
+{% endblock sidebar_menu %}
