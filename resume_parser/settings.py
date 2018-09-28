@@ -139,5 +139,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-
-GDAL_LIBRARY_PATH = "/app/.heroku/python/lib/python3.6/site-packages/django/contrib/gis/gdal/libgdal.py"

@@ -1,4 +1,4 @@
-from django.contrib.gis import geoip2
+# from django.contrib.gis import geoip2
 
 """Make sure that django has the correct IP even if there is a proxy/CDN"""
 
@@ -14,18 +14,18 @@ def get_ip_address():
 
 def get_city(ip_address):
 
-    g = geoip2.GeoIP2()
-    if ip_address:
-        city_data = g.city(ip_address)
-        city = city_data['city']
-    else:
-        city = 'Rome'  # default city
-    return city
+    # g = geoip2.GeoIP2()
+    # if ip_address:
+    #     city_data = g.city(ip_address)
+    #     city = city_data['city']
+    # else:
+    #     city = 'Rome'  # default city
+    return None
 
 
 def get_location(ip_address):
-    g = geoip2.GeoIP2()
-    location = None
-    if ip_address:
-        location = g.coords(ip_address)
-    return location
+    # g = geoip2.GeoIP2()
+    # location = None
+    # if ip_address:
+    #     location = g.coords(ip_address)
+    return None
