@@ -26,7 +26,6 @@ Cloudanalogy Career
 {% endblock %}
 {% block breadcrumbs %}
 {% endblock %}
-{% block content %}
 {% block sidebar_menu %}
 <div class="container-fluid">
     <div class="row">
@@ -35,17 +34,6 @@ Cloudanalogy Career
                 <h3>APPLY HERE</h3>
             {% endblock branding %}
         </div>
-        {% block messages %}
-        {% if messages %}
-          {% for msg in messages %}
-            <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
-              <button type="button" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
-              {{msg.tags|title}}: {{msg.message}}
-            </div>
-          {% endfor %}
-        {% endif %}
-        {% endblock messages %}
     </div>
 </div>
 {% endblock sidebar_menu %}
-{% endblock content %}

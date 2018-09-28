@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% block content %}
-{{super}}
 <div class="container-fluid">
 	<div class="row">
+        {% block messages %}
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+              <button type="button" class="close alert-dismissable" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+              {{msg.tags|title}}: {{msg.message}}
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% endblock messages %}
 		<div class="col-md-8">
 			<div class="row">
 				<div class="col-md-8">
@@ -48,7 +57,6 @@
 							Submit
 						</button>
 					</form>
-
 				</div>
 			</div>
 		</div>
