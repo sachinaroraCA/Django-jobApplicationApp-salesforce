@@ -47,18 +47,22 @@ def upload_details(request):
 
             # CREATE RECORD IN SALESFORCE
             sf_instance = SFConnectAPI()
-            sf_instance.create_record(object_name='Resume_Google_Drive_Link__c',
-                                      data={'Name__c': name,
-                                            'Contact_Number__c': contact,
-                                            'Email__c': email,
-                                            'Google_Drive_URL__c': file_url,
-                                            'Position__c': designation,
-                                            'Address__latitude__s': location[1],
-                                            'Address__longitude__s': location[0],
-                                            'City__c': city,
-                                            })
+            result =sf_instance.create_record(object_name='Resume_Google_Drive_Link__c',
+                                              data={'Name__c': name,
+                                                    'Contact_Number__c': contact,
+                                                    'Email__c': email,
+                                                    'Google_Drive_URL__c': file_url,
+                                                    'Position__c': designation,
+                                                    'Address__latitude__s': location[1],
+                                                    'Address__longitude__s': location[0],
+                                                    'City__c': city,
+                                                    })
 
-            messages.success( request, 'You have applied successfully !!!' )
+
+            print(result["id"]+" created")
+
+            if result['success']:
+                messages.success( request, 'You have applied successfully !!!' )
     except Exception as ex:
         print("Exception:"+ repr(ex))
         messages.error( request, 'Unable to process request.. try again later !!!' )

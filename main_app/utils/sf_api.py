@@ -19,9 +19,6 @@ class SFConnectAPI:
         :param sf_config:
         """
         print("connecting with salesforce.")
-        # self.sf = Salesforce(username=sf_config.USERNAME,
-        #                      password=sf_config.PASSWORD,
-        #                      sandbox=True)
         self.security_token = self.get_access_token()
         self.sf = Salesforce(instance=sf_config.SF_URL,
                              session_id=self.security_token,
@@ -61,7 +58,6 @@ class SFConnectAPI:
         :param host:
         :return:
         """
-
         result = self.sf.query(query)
         return result
 
@@ -70,6 +66,7 @@ class SFConnectAPI:
         try:
             sf_obj = SFType(object_name, session_id, self.sf_config.SF_URL)
             result = sf_obj.create(data)
+            print(repr(result))
         except Exception as ex:
             result = ex
             print(repr(ex))
@@ -150,3 +147,17 @@ class SFConnectAPI:
 #         'redirect_uri': ConnectionString.REDIRECT_URI}
 # result = requests.post(' https://test.salesforce.com/services/oauth2/authorize?response_type=code', data=data)
 # print(result.json())
+
+
+sf = SFConnectAPI()
+result = sf.create_record( object_name='Resume_Google_Drive_Link__c',
+                           data={'Name__c': 'TEST RECORD 1',
+                                 'Contact_Number__c': '9936556447',
+                                 'Email__c': 'sdfffg@gmail.com',
+                                 'Google_Drive_URL__c': 'https://drive.google.com/file/d/1Stu3UScJ6uy8V9zGa1rqVAGxNehlry6c/view',
+                                 'Position__c': 'Developer',
+                                 'City__c': 'Delhi',
+                                 } )
+
+
+print(repr(result))
