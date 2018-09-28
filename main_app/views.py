@@ -10,7 +10,7 @@ import re
 
 def home(request):
     print('redirecting')
-    messages.success("WELCOME TO CLOUDANALOGY ")
+    messages.success(request, "WELCOME TO CLOUDANALOGY ")
     return render(request, "application_form.html", {'designations': ['', 'Developer', 'Consultant']})
 
 
