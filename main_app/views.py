@@ -7,9 +7,6 @@ from main_app.utils.sf_api import SFConnectAPI
 from main_app.utils.drive_utils import get_folder_id
 import re
 
-gd_instance = GoogleDrive()
-sf_instance = SFConnectAPI()
-
 
 def home(request):
     print('redirecting')
@@ -35,10 +32,10 @@ def upload_details(request):
                 return HttpResponseRedirect( '/home/' )
 
 
-            # Uploading the file in salesforce
+            # Uploading the file in DRIVE
             file_name = name + " | " + contact + " | " + email
             folder_id = get_folder_id(designation)
-
+            gd_instance = GoogleDrive()
             file_id, file_url = gd_instance.upload_file(file_name, media=resume, folder_id=folder_id)
 
             ip_address = get_ip_address()
@@ -48,6 +45,8 @@ def upload_details(request):
             location = get_location(ip_address)
             city = get_city(ip_address)
 
+            # CREATE RECORD IN SALESFORCE
+            sf_instance = SFConnectAPI()
             sf_instance.create_record(object_name='Resume_Google_Drive_Link__c',
                                       data={'Name__c': name,
                                             'Contact_Number__c': contact,

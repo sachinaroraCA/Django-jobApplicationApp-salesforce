@@ -3,7 +3,7 @@
 """
 import http.client
 from simple_salesforce import Salesforce, SFType
-from simple_salesforce import SalesforceLogin
+# from simple_salesforce import SalesforceLogin
 from main_app.Constants.sf_config import ConnectionString
 
 
