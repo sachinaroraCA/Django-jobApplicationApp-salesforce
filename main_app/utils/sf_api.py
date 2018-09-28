@@ -149,15 +149,15 @@ class SFConnectAPI:
 # print(result.json())
 
 
-sf = SFConnectAPI()
-result = sf.create_record( object_name='Resume_Google_Drive_Link__c',
-                           data={'Name__c': 'TEST RECORD 1',
-                                 'Contact_Number__c': '9936556447',
-                                 'Email__c': 'sdfffg@gmail.com',
-                                 'Google_Drive_URL__c': 'https://drive.google.com/file/d/1Stu3UScJ6uy8V9zGa1rqVAGxNehlry6c/view',
-                                 'Position__c': 'Developer',
-                                 'City__c': 'Delhi',
-                                 } )
-
-
-print(repr(result))
+# sf = SFConnectAPI()
+# result = sf.create_record( object_name='Resume_Google_Drive_Link__c',
+#                            data={'Name__c': 'TEST RECORD 1',
+#                                  'Contact_Number__c': '9936556447',
+#                                  'Email__c': 'sdfffg@gmail.com',
+#                                  'Google_Drive_URL__c': 'https://drive.google.com/file/d/1Stu3UScJ6uy8V9zGa1rqVAGxNehlry6c/view',
+#                                  'Position__c': 'Developer',
+#                                  'City__c': 'Delhi',
+#                                  } )
+#
+#
+# print(repr(result))
