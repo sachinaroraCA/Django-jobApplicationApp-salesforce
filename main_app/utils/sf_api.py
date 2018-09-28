@@ -22,6 +22,7 @@ class SFConnectAPI:
         self.security_token = self.get_access_token()
         self.sf = Salesforce(instance=sf_config.SF_URL,
                              session_id=self.security_token,
+                             # security_token=sf_config.SECURITY_TOKEN,
                              sandbox=True)
 
         self.sf_config = sf_config
@@ -43,7 +44,7 @@ class SFConnectAPI:
         """
         data = {'client_secret': ConnectionString.CLIENT_SECRET,
                 'username': ConnectionString.USERNAME,
-                'password': ConnectionString.PASSWORD,
+                'password': ConnectionString.PASSWORD+ConnectionString.SECURITY_TOKEN,
                 'client_id': ConnectionString.CONSUMER_KEY,
                 'redirect_uri': ConnectionString.REDIRECT_URI}
         import requests
