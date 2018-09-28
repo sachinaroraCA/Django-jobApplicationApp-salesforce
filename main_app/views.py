@@ -9,8 +9,6 @@ import re
 
 
 def home(request):
-    print('redirecting')
-    messages.success(request, "WELCOME TO CLOUDANALOGY ")
     return render(request, "application_form.html", {'designations': ['', 'Developer', 'Consultant']})
 
 
@@ -67,4 +65,4 @@ def upload_details(request):
     except Exception as ex:
         print("Exception:"+ repr(ex))
         messages.error( request, 'Unable to process request.. try again later !!!' )
-    return HttpResponseRedirect('/home/')
+    return HttpResponseRedirect('/')
