@@ -37,3 +37,13 @@ Cloudanalogy Career
     </div>
 </div>
 {% endblock sidebar_menu %}
+{% block messages %}
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>{{msg.tags|title}}!</strong> {{msg.message}}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock messages %}
