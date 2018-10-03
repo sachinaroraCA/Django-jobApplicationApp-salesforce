@@ -2,32 +2,64 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8">
-			<div class="row">
-				<div class="col-md-8">
-					<form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data">
+    <div id="cover-caption">
+        <div id="container" class="container">
+            <div class="row"  >
+                <div class="col-sm-4 box align-middle" style="position:absolute; margin:auto; top:0;right: 0;bottom: 0;left: 0;box-sizing:border-box;">
+                    <div class="info-form" style ="border:1px solid #c9c7c5;display: flex;overflow-y: scroll;height:500px;border-radius:10px">
+                                                <div style="width:100%;height:100%;padding 20px 20px 20px 20px; margin: 20px 20px 20px 20px;">
+
+                    <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" style="margin-botton:20px;padding-bottom:20px;">
                         {% csrf_token %}
+                        <div class="well well-sm">
+                            <span class="glyphicon glyphicon-user"> </span>
+                            <span>&nbsp; Personal Information</span>
+                        </div>
                         <div class="form-group">
-							<label for="condidateName">
-								Name
+							<label for="firstName">
+                                <span style="color:red;">*</span> First Name
 							</label>
-							<input type="text" class="form-control" required id="condidateName" name="Name"/>
+							<input type="text" class="form-control" required id="firstName" name="firstName"/>
 						</div>
-						<div class="form-group">
-							<label for="Email__c">
-								Email
+                        <div class="form-group">
+							<label for="lastName">
+								Last Name
 							</label>
-							<input type="email" class="form-control" id="Email__c" required name="Email__c" />
+							<input type="text" class="form-control" id="lastName" name="lastName"/>
 						</div>
                         <div class="form-group">
 							<label for="Contact_Number__c">
-								Contact Number
+								<span style="color:red;">*</span> Mobile
 							</label>
 							<input type="tel" class="form-control" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
 						</div>
                         <div class="form-group">
-                          <label for="Designation__c">Designation</label>
+							<label for="Email__c">
+								<span style="color:red;">*</span> Email
+							</label>
+							<input type="email" class="form-control" id="Email__c" required name="Email__c" />
+						</div>
+                        <div class="well well-sm">
+                            <span class="glyphicon glyphicon glyphicon-book"> </span>
+                            <span>&nbsp; Professional Information</span>
+                        </div>
+
+                        <div class="form-group">
+							<label for="id_resumeFile">
+								Resume
+							</label>
+							<input type="file" class="form-control-file" id="id_resumeFile" required  name="resumeFile" />
+						</div>
+                        <div class="form-group">
+                          <label for="Education__c">Highest Education</label>
+                          <select class="form-control" id="Education__c" required name="Education__c">
+                              {% for item in education%}
+                              <option>{{item}}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="Designation__c">Position applied for</label>
                           <select class="form-control" id="Designation__c" required name="Designation__c">
                               {% for item in designations%}
                               <option>{{item}}</option>
@@ -35,21 +67,23 @@
                           </select>
                         </div>
                         <div class="form-group">
-							<label for="id_resumeFile">
-								File input
-							</label>
-							<input type="file" class="form-control-file" id="id_resumeFile" required  name="resumeFile" />
-							<p class="help-block">
-								Upload your resume here
-							</p>
-						</div>
-						<button type="submit" class="btn btn-primary">
-							Submit
+                          <label for="Experience__c">Experience</label>
+                          <select class="form-control" id="Experience__c" required name="Experience__c">
+                              {% for item in experiences%}
+                              <option>{{item}}</option>
+                              {% endfor %}
+                          </select>
+                        </div>
+						<button type="submit" class="btn btn-primary" >
+							Save
 						</button>
 					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                    <br>
+                </div>
+                    </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

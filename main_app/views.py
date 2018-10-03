@@ -9,18 +9,27 @@ import re
 
 
 def home(request):
-    return render(request, "application_form.html", {'designations': ['', 'Developer', 'Consultant']})
+    return render(request,
+                  "application_form.html",
+                  {'designations': ['', 'Developer', 'Consultant'],
+                   'experiences': ['0-6 months', '1 year', '2 years', '3 years', '3-5 years', '5+ years'],
+                   'education': ['', 'Graduation', 'Masters']},
+                  )
 
 
 def upload_details(request):
     print("uploading details")
     try:
         if request.method == 'POST':
-            name = str(request.POST.get("Name")).strip()
+            first_name = str(request.POST.get("firstName")).strip()
+            last_name = str(request.POST.get("firstName")).strip()
+            name = first_name+" "+last_name
             email = request.POST.get("Email__c")
             contact = request.POST.get("Contact_Number__c")
-            designation = request.POST.get("Designation__c")
+            education = request.POST.get("Education__c")
+            experience = request.POST.get("Experience__c")
             resume = request.FILES["resumeFile"]
+            designation = request.POST.get( "Designation__c" )
 
             if not name or name == "" or not bool( re.match( '^[a-zA-Z ]+$', name ) ):
                 messages.error(request, "Error: Name field must contains only Characters")
@@ -55,10 +64,11 @@ def upload_details(request):
                                                     'Address__latitude__s': location[1],
                                                     'Address__longitude__s': location[0],
                                                     'City__c': city,
+                                                    'Highest_Education__c': education,
+                                                    'Experience__c': experience,
                                                     })
 
-
-            print(result["id"]+" created")
+            print(result["id"] + " created")
 
             if result['success']:
                 messages.success( request, 'You have applied successfully !!!' )
