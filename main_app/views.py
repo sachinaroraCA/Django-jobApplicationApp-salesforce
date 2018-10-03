@@ -12,7 +12,7 @@ def home(request):
     return render(request,
                   "application_form.html",
                   {'designations': ['', 'Developer', 'Consultant'],
-                   'experiences': ['0-6 months', '1 year', '2 years', '3 years', '3-5 years', '5+ years'],
+                   'experiences': ['0-6 months', '1 year', '2 years', '3-5 years', '5+ years'],
                    'education': ['', 'Graduation', 'Masters']},
                   )
 
