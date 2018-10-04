@@ -28,8 +28,8 @@ class GoogleDrive:
         self.service = build('drive', 'v3',
                              http=creds.authorize(Http()))
 
-    def create_folder(self):
-        file_metadata = {'name': 'Invoices',
+    def create_folder(self, folder_name, parent_folder):
+        file_metadata = {'name': folder_name,'parents': [parent_folder],
                          'mimeType': 'application/vnd.google-apps.folder'}
 
         folder = self.service.files().create(body=file_metadata,
