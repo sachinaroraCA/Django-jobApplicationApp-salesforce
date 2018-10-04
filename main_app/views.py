@@ -11,9 +11,9 @@ import re
 def home(request):
     return render(request,
                   "application_form.html",
-                  {'designations': ['', 'Developer', 'Consultant', 'HR', 'QA', 'Bussiness Developer Executive', 'Content Writer', 'UI Developer', 'Sales Executive', 'Web Developer', 'Sales'],
+                  {'designations': [{'label':'--Select Option--', 'value': ''}, 'Developer', 'Consultant', 'HR', 'QA', 'Bussiness Developer Executive', 'Content Writer', 'UI Developer', 'Sales Executive', 'Web Developer', 'Sales'],
                    'experiences': ['0-6 months', '1 year', '2 years', '3-5 years', '5+ years'],
-                   'education': ['', 'Graduation', 'Masters', 'B.Tech']},)
+                   'education': [{'label':'--Select Option--', 'value': ''}, 'Graduation', 'Masters', 'B.Tech']},)
 
 
 def upload_details(request):
