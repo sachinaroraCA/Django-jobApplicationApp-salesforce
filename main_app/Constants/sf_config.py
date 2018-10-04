@@ -8,7 +8,7 @@ class ConnectionString:
     SECURITY_TOKEN = "JVE1LuWtQMkCkrmlJcuQtGvNM"
     CONSUMER_KEY = "3MVG9Vik22TUgUphWlC1Z3_7xqY1byIyizn2tCxsPzB1NjixeH8NcpGMci5Ge1O34PWokgwuPovlKQjJS6c2J"
     CLIENT_SECRET = "4906138348286418247"
-    REFRESH_TOKEN = "5Aep8613hy0tHCYdhyiUsgtHzqfLdtsmdHtLp.mW0HtTtfVAyfYWjbddqKwNUL77sn3okdaw2iguA9BGi1MKOA9"
+    REFRESH_TOKEN = "5Aep861Ov3oA7NvELpsA2vVMGQ5kuCMkbIiM6dP6mYXQ1KKwoYPQvYOn_8o8oY_B_kn86eckjXKyVqoGTy8cb3h"
     REDIRECT_URI = "https://www.getpostman.com/oauth2/callback"
 
 IS_MULTILINGUAL = False

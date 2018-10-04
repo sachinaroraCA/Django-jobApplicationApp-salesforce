@@ -1,10 +1,33 @@
 """
     SALESFORCE API MODULE
 """
-import http.client
 from simple_salesforce import Salesforce, SFType
-# from simple_salesforce import SalesforceLogin
 from main_app.Constants.sf_config import ConnectionString
+
+
+def get_access_token_by_refresh_token():
+    """
+    :return:
+    """
+    data = {'client_secret': ConnectionString.CLIENT_SECRET,
+            'client_id': ConnectionString.CONSUMER_KEY,
+            'redirect_uri': ConnectionString.REDIRECT_URI,
+            'refresh_token': ConnectionString.REFRESH_TOKEN}
+    import requests
+    response = requests.post("https://test.salesforce.com/services/oauth2/token?grant_type=refresh_token", data=data)
+    print(response.json())
+    return response.json().get("access_token")
+
+
+def get_refresh_token():
+    data = {'client_secret': ConnectionString.CLIENT_SECRET,
+            'client_id': ConnectionString.CONSUMER_KEY,
+            'redirect_uri': ConnectionString.REDIRECT_URI,
+            }
+    import requests
+    response = requests.post("https://test.salesforce.com/services/oauth2/authorize?grant_type=authorization&response_type=token", data=data)
+    print(response.json())
+    return response.json().get("refresh_token")
 
 
 class SFConnectAPI:
@@ -19,13 +42,11 @@ class SFConnectAPI:
         :param sf_config:
         """
         print("connecting with salesforce.")
-        self.security_token = self.get_access_token()
+        self.security_token = get_access_token_by_refresh_token()
         self.sf = Salesforce(instance=sf_config.SF_URL,
                              session_id=self.security_token,
                              # security_token=sf_config.SECURITY_TOKEN,
                              sandbox=True)
-
-        self.sf_config = sf_config
         print("connection success")
 
     def get_header(self, session_id):
@@ -65,7 +86,7 @@ class SFConnectAPI:
     def create_record(self, object_name=None, data=None):
         session_id = self.security_token
         try:
-            sf_obj = SFType(object_name, session_id, self.sf_config.SF_URL)
+            sf_obj = SFType(object_name, session_id, ConnectionString.SF_URL)
             result = sf_obj.create(data)
             print(repr(result))
         except Exception as ex:
@@ -76,7 +97,7 @@ class SFConnectAPI:
     def update_record(self, record_id=None, object_name=None, data=None):
         session_id = self.security_token
         try:
-            sf_obj = SFType( object_name, session_id, self.sf_config.SF_URL )
+            sf_obj = SFType( object_name, session_id, ConnectionString.SF_URL )
             result = sf_obj.update(record_id, data)
         except Exception as ex:
             result = ex
@@ -151,6 +172,8 @@ class SFConnectAPI:
 
 
 # sf = SFConnectAPI()
+# result = sf.get_refresh_token()
+# print(result)
 # result = sf.create_record( object_name='Resume_Google_Drive_Link__c',
 #                            data={'Name__c': 'TEST RECORD 1',
 #                                  'Contact_Number__c': '9936556447',
@@ -162,3 +185,5 @@ class SFConnectAPI:
 #
 #
 # print(repr(result))
+
+# get_refresh_token()
