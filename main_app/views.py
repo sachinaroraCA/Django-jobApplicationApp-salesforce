@@ -20,8 +20,8 @@ def upload_details(request):
     try:
         if request.method == 'POST':
             first_name = str(request.POST.get("firstName")).strip()
-            last_name = str(request.POST.get("firstName")).strip()
-            name = first_name+" "+last_name
+            last_name = str(request.POST.get("lastName")).strip()
+            name = first_name+" "+ last_name
             email = request.POST.get("Email__c")
             contact = request.POST.get("Contact_Number__c")
             education = request.POST.get("Education__c")
