@@ -21,6 +21,38 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (-webkit-min-device-pixel-ratio: 2)
+    {
+        .col-sm-4{
+          max-width: 99%!important;
+          width: 98%;
+        }
+        .mobile-width{
+                  display: flex !important;
+        }
+
+    }
+    @media only screen and (min-device-width : 240px) and (max-device-width : 768px) and (-webkit-min-device-pixel-ratio: 2)
+    {
+        .col-sm-4{
+          max-width: 99%!important;
+          width: 98%;
+        }
+
+    }
+     @media only screen and (min-device-width : 320px) and (max-device-width : 568px)
+    {
+        .mobile-css{
+          margin: 20px 4px 20px 4px!important;
+          padding: 0px 2px 0px 2px;
+        }
+        .mobile-width{
+
+            display: inline-flex;
+            }
+
+    }
+
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
