@@ -64,6 +64,10 @@
   font-weight: bold;
 }
 
+#header {
+color:white;
+}
+
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
   position: absolute;
@@ -83,12 +87,4 @@ Cloudanalogy Career
 {% block sidebar_menu %}
 {% endblock sidebar_menu %}
 {% block messages %}
-{% if messages %}
-  {% for msg in messages %}
-    <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissible fade show">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>{{msg.tags|title}}!</strong> {{msg.message}}
-    </div>
-  {% endfor %}
-{% endif %}
 {% endblock messages %}
