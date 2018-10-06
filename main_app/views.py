@@ -81,4 +81,4 @@ def upload_details(request):
     except Exception as ex:
         print("Exception:"+ repr(ex))
         messages.error(request, 'Unable to process request.. try again later !!!')
-    return HttpResponseRedirect('/')
+    return render(request, "thank_you.html")

@@ -3,9 +3,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+function myfun(){
+    document.getElementById('upload_button').style.visibility = 'visible'
+    document.getElementById('submit_btn').style.visibility = 'hidden'
+}
+</script>
+
 <style>
+/* Add refresh button */
+.buttonload {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 12px 24px; /* Some padding */
+    font-size: 16px; /* Set a font-size */
+}
+
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
@@ -21,14 +44,13 @@ button {
     opacity: 0.9;
 }
 
-button:hover {
-    opacity:1;
+#alertbtn {
+        padding: 0px;
+    margin: 0px;
 }
 
-/* Extra styles for the cancel button */
-.cancelbtn {
-    padding: 14px 20px;
-    background-color: #f44336;
+button:hover {
+    opacity:1;
 }
 
 /* Float cancel and signup buttons and add an equal width */
@@ -47,30 +69,6 @@ hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
 }
-
-/* The Close Button (x) */
-.close {
-    position: absolute;
-    right: 35px;
-    top: 15px;
-    font-size: 40px;
-    font-weight: bold;
-    color: #f1f1f1;
-}
-
-.close:hover,
-.close:focus {
-    color: #f44336;
-    cursor: pointer;
-}
-
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-
 /* Change styles for cancel button and signup button on extra small screens */
 @media screen and (max-width: 300px) {
     .cancelbtn, .signupbtn {
@@ -81,60 +79,71 @@ hr {
 <body>
 <div >
     <div class="panel panel-default">
-  <div class="panel-body">
-<form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <div class="well well-sm">
-        <small><span class="glyphicon glyphicon-user"> </span></small>
-        <span>&nbsp; Personal Information</span>
-    </div>
-      <div class="panel panel-default">
-  <div class="panel-body">
-            <div class="form-group">
-                <label for="name">
-                    <span style="color:red;">*</span> Name
-                </label>
-                <input type="text" name="name" class="form-control" required id="name" />
+        <div class="panel-body">
+            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+                    <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+                    {{msg.tags|title}}: {{msg.message}}
+                </div>
+                {% endfor %}
+            {% endif %}
+                {% csrf_token %}
+                <div class="well well-sm">
+                    <small><span class="glyphicon glyphicon-user"> </span></small>
+                    <span>&nbsp; Personal Information</span>
+                </div>
+                  <div class="panel panel-default">
+              <div class="panel-body">
+                        <div class="form-group">
+                            <label for="name">
+                                <span style="color:red;">*</span> Name
+                            </label>
+                            <input type="text" name="name" class="form-control" required id="name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Contact_Number__c">
+                                <span style="color:red;">*</span> Mobile
+                            </label>
+                            <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email__c">
+                                <span style="color:red;">*</span> Email
+                            </label>
+                            <input type="email" class="form-control" id="Email__c" required name="Email__c" />
+                        </div>
+                         <div >
+                        <div class="form-group">
+                            <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
+                          <input type="file" class="inputfile" id="id_resumeFile"  required  name="resumeFile" />
+                        </div>
+                         </div>
+                <div class="form-group">
+                <div class="form-group">
+                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
+                  <select class="form-control" id="Designation__c" required name="Designation__c">
+                      {% for item in designations %}
+                      {% if not item.label %}
+                      <option>{{item}}</option>
+                      {% else %}
+                      <option label="{{item.label}}" value="{{item.value}}" ></option>
+                      {% endif %}
+                      {% endfor %}
+                  </select>
+                </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="Contact_Number__c">
-                    <span style="color:red;">*</span> Mobile
-                </label>
-                <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
-            </div>
-            <div class="form-group">
-                <label for="Email__c">
-                    <span style="color:red;">*</span> Email
-                </label>
-                <input type="email" class="form-control" id="Email__c" required name="Email__c" />
-            </div>
-             <div >
-            <div class="form-group">
-                <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
-              <input type="file" class="inputfile" id="id_resumeFile"  required  name="resumeFile" />
-            </div>
-             </div>
-    <div class="form-group">
-    <div class="form-group">
-      <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-      <select class="form-control" id="Designation__c" required name="Designation__c">
-          {% for item in designations %}
-          {% if not item.label %}
-          <option>{{item}}</option>
-          {% else %}
-          <option label="{{item.label}}" value="{{item.value}}" ></option>
-          {% endif %}
-          {% endfor %}
-      </select>
-    </div>
-        </div>
-    </div>
-</div>
-</form>
-              <button type="submit" class="btn btn-primary" >
+            </form>
+            <button type="submit" id="submit_btn" onclick="return myfun()" class="btn btn-primary" >
             Save
-        </button>
-  </div>
+            </button>
+            <button class="buttonload" id="upload_button" style="visibility: hidden;">
+              <i class="fa fa-spinner fa-spin"></i>Uploading
+            </button>
+        </div>
     </div>
 </div>
 </body>
