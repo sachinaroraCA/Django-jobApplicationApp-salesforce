@@ -20,6 +20,16 @@
                     <div class="info-form" >
                         <div class="mobile-width" style ="border:1px solid #c9c7c5;display: inline-flex;border-radius: 10px 10px 10px 10px;">
                             <div class="mobile-css" style="width:100%;height:100%;padding 20px 20px 20px 20px; margin: 20px 20px 20px 20px;">
+                                {% if messages %}
+                                    {% for msg in messages %}
+                                    <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+                                        <button type="button" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">
+                                            &times;
+                                        </button>
+                                        {{msg.tags|title}}: {{msg.message}}
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
 
                                 <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" style="margin-botton:20px;padding-bottom:20px;">
                                     {% csrf_token %}
@@ -118,5 +128,12 @@
             </div>
         </div>
     </div>
+</div>
+<div id="drop-area">
+  <form class="my-form">
+    <p>Upload multiple files with the file dialog or by dragging and dropping images onto the dashed region</p>
+    <input type="file" id="fileElem" multiple accept="image/*" onchange="handleFiles(this.files)">
+    <label class="button" for="fileElem">Select some files</label>
+  </form>
 </div>
 {% endblock %}

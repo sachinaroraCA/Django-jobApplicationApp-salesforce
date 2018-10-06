@@ -11,21 +11,18 @@ import re
 def home(request):
     return render(request,
                   "application_form.html",
-                  {'designations': [{'label':'--Select Option--', 'value': ''}, 'Developer', 'Consultant', 'HR', 'QA', 'Bussiness Developer Executive', 'Content Writer', 'UI Developer', 'Sales Executive', 'Web Developer', 'Sales'],
-                   'experiences': ['0-6 months', '1 year', '2 years', '3-5 years', '5+ years'],
-                   'education': [{'label':'--Select Option--', 'value': ''}, 'Graduation', 'Masters', 'B.Tech']},)
+                  {'designations': ['Developer', 'Consultant', 'HR', 'QA',
+                                    'Bussiness Developer Executive', 'Content Writer',
+                                    'UI Developer', 'Sales Executive',
+                                    'Web Developer', 'Sales']})
 
 
 def upload_details(request):
     try:
         if request.method == 'POST':
-            first_name = str(request.POST.get("firstName")).strip()
-            last_name = str(request.POST.get("lastName")).strip()
-            name = first_name+" "+ last_name
+            name = str(request.POST.get("name")).strip()
             email = request.POST.get("Email__c")
             contact = request.POST.get("Contact_Number__c")
-            education = request.POST.get("Education__c")
-            experience = request.POST.get("Experience__c")
             resume = request.FILES["resumeFile"]
             designation = request.POST.get("Designation__c")
 
