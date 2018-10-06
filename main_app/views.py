@@ -69,11 +69,10 @@ def upload_details(request):
 
                 if result['success']:
                     messages.success(request, 'You have applied successfully !!!')
-
+                    return render( request, "thank_you.html" )
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
-                    return render( request, "thank_you.html" )
             else:
                 print("google drive folder does not exists")
                 messages.error(request, 'Unable to process request.. try again later !!!')
