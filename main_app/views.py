@@ -30,7 +30,7 @@ def upload_details(request):
                 messages.error(request, "Error: Name field must contains only Characters")
                 return HttpResponseRedirect('/home/')
 
-            if not re.match('^[0-9]+$', contact):
+            if not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 messages.error(request, "Error: Phone field must contains only Numbers")
                 return HttpResponseRedirect('/home/')
 
