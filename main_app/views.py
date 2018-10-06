@@ -63,22 +63,21 @@ def upload_details(request):
                                                          'Address__latitude__s': location[1],
                                                          'Address__longitude__s': location[0],
                                                          'City__c': city,
-                                                         'Highest_Education__c': education,
-                                                         'Experience__c': experience,
                                                          })
                 if "id" in result.keys():
                     print(result["id"] + " created")
 
                 if result['success']:
                     messages.success(request, 'You have applied successfully !!!')
+
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
-                    
+                    return render( request, "thank_you.html" )
             else:
                 print("google drive folder does not exists")
                 messages.error(request, 'Unable to process request.. try again later !!!')
     except Exception as ex:
         print("Exception:"+ repr(ex))
         messages.error(request, 'Unable to process request.. try again later !!!')
-    return render(request, "thank_you.html")
+    return HttpResponseRedirect(request, "/")
