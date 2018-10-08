@@ -217,11 +217,7 @@ hr {
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
                   <select class="form-control" id="Designation__c" required name="Designation__c">
                       {% for item in designations %}
-                      {% if not item.label %}
-                      <option>{{item}}</option>
-                      {% else %}
-                      <option label="{{item.label}}" value="{{item.value}}" ></option>
-                      {% endif %}
+                      <option {% ifequal item "Developer" %} selected {% endifequal %}>{{item}}</option>
                       {% endfor %}
                   </select>
                 </div>
