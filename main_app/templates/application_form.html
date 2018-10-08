@@ -9,22 +9,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-
-
-
-<!--
-  DO NOT SIMPLY COPY THOSE LINES. Download the JS and CSS files from the
-  latest release (https://github.com/enyo/dropzone/releases/latest), and
-  host them yourself!
--->
-
-<script src="static/js/dropzone.js"></script>
-<link rel="stylesheet" href="static/css/dropzone.css">
-<!--script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css" -->
-
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-
 <script type="text/javascript">
 
 $(document).ready( function() {
@@ -102,7 +86,7 @@ $(document).ready( function() {
     background-size: 100%;
     background-repeat: no-repeat;
 }
-.color input{ background-color:#f1f1f1;}
+.color input{ background-color:#f1f1f1; height:150%;}
 .files:before {
     position: absolute;
     bottom: 10px;
@@ -192,31 +176,33 @@ hr {
 	z-index: 9999;
 	background: url("https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif") center no-repeat #fff;
 }
-
+.form-wrapper input {
+    box-sizing: border-box;
+}
 </style>
 
 <body>
-    <div >
-        <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
-                    {% if messages %}
-                        {% for msg in messages %}
-                        <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
-                            <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
-                            {{msg.tags|title}}: {{msg.message}}
-                        </div>
-                        {% endfor %}
-                    {% endif %}
-                    {% csrf_token %}
-                    <div class="well well-sm">
-                        <small><span class="glyphicon glyphicon-user"> </span></small>
-                        <span>&nbsp; Personal Information</span>
-                    </div>
-                    <div class="panel panel-default">
-                      <div class="panel-body">
+<div >
+    <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+                    <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+                    {{msg.tags|title}}: {{msg.message}}
+                </div>
+                {% endfor %}
+            {% endif %}
+                {% csrf_token %}
+                <div class="well well-sm">
+                    <small><span class="glyphicon glyphicon-user"> </span></small>
+                    <span>&nbsp; Personal Information</span>
+                </div>
+                  <div class="panel panel-default">
+              <div class="panel-body">
                         <div class="form-group">
                             <label for="name">
                                 <span style="color:red;">*</span> Name
@@ -235,35 +221,33 @@ hr {
                             </label>
                             <input type="email" class="form-control" id="Email__c" required name="Email__c" />
                         </div>
-                         <div >
-                        <div class="form-group files color">
+                        <div class="form-group color">
                             <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
                           <input type="file" class="form-control" id="id_resumeFile"  required  name="resumeFile" />
                         </div>
-                     </div>
-                    <div class="form-group">
-                    <div class="form-group">
-                      <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-                      <select class="form-control" id="Designation__c" required name="Designation__c">
-                          {% for item in designations %}
-                          {% if not item.label %}
-                          <option>{{item}}</option>
-                          {% else %}
-                          <option label="{{item.label}}" value="{{item.value}}" ></option>
-                          {% endif %}
-                          {% endfor %}
-                      </select>
-                    </div>
-                        </div>
+                <div class="form-group">
+                <div class="form-group">
+                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
+                  <select class="form-control" id="Designation__c" required name="Designation__c">
+                      {% for item in designations %}
+                      {% if not item.label %}
+                      <option>{{item}}</option>
+                      {% else %}
+                      <option label="{{item.label}}" value="{{item.value}}" ></option>
+                      {% endif %}
+                      {% endfor %}
+                  </select>
+                </div>
                     </div>
                 </div>
-                </form>
-                <button type="submit" id="submit_btn" class="btn btn-primary" >
-                Save
-                </button>
             </div>
+            </form>
+            <button type="submit" id="submit_btn" class="btn btn-primary" >
+            Save
+            </button>
         </div>
     </div>
+</div>
 
 </body>
 </html>

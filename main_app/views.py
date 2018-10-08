@@ -34,10 +34,6 @@ def upload_details(request):
                 messages.error(request, "Error: Phone field must contains only Numbers")
                 return HttpResponseRedirect('/home/')
 
-            # if experience == '--Select Option--' or education == ''
-
-
-            # Uploading the file in DRIVE
             file_name = name + " | " + contact + " | " + email
             folder_info = get_folder_id(designation)
             if folder_info[0]:
