@@ -9,6 +9,19 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<!--
+  DO NOT SIMPLY COPY THOSE LINES. Download the JS and CSS files from the
+  latest release (https://github.com/enyo/dropzone/releases/latest), and
+  host them yourself!
+-->
+
+<script src="static/js/dropzone.js"></script>
+<link rel="stylesheet" href="static/css/dropzone.css">
+<!--script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css" -->
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
 <script type="text/javascript">
 
 $(document).ready( function() {
@@ -62,7 +75,6 @@ $(document).ready( function() {
     outline-offset: -10px;
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
     transition: outline-offset .15s ease-in-out, background-color .15s linear;
-    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
     padding: 120px 0px 85px 35%;
     text-align: center !important;
     margin: 0;
@@ -166,6 +178,7 @@ hr {
        width: 100%;
     }
 }
+
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
 .se-pre-con {
 	position: fixed;
@@ -176,11 +189,11 @@ hr {
 	z-index: 9999;
 	background: url("https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif") center no-repeat #fff;
 }
-
 .form-wrapper input {
     box-sizing: border-box;
 }
 </style>
+
 <body>
 <div >
     <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
@@ -230,17 +243,20 @@ hr {
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
                   <select class="form-control" id="Designation__c" required name="Designation__c">
                       {% for item in designations %}
-
-                      <option {% ifequal item "Developer" %}selected{% endifequal %} > {{item}}</option>
+                      {% if not item.label %}
+                      <option>{{item}}</option>
+                      {% else %}
+                      <option label="{{item.label}}" value="{{item.value}}" ></option>
+                      {% endif %}
                       {% endfor %}
                   </select>
                 </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" id="submit_btn" class="btn btn-primary" >
-            Save
-            </button>
+                <button type="submit" id="submit_btn" class="btn btn-primary" >
+                    Save
+                </button>
             </form>
 
         </div>
