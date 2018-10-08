@@ -104,6 +104,28 @@ class SFConnectAPI:
             print(repr(ex))
         return result
 
+    def get_sf_fields(self, url, sfobj_api=None, dummy=False):
+        """
+        :param url:
+        :param sfobj_api:
+        :param dummy:
+        :return sf_object_fields:
+        """
+        import json
+        if sfobj_api:
+            sftype_object = SFType(sfobj_api,
+                                   session_id=self.security_token,
+                                   sf_instance=url)
+            describe = sftype_object.describe(headers=None)
+            print(json.dumps(describe))
+            sf_object_fields = describe['fields']
+            return sf_object_fields
+        return None
+
+    def get_position_values(self):
+        fields = self.get_sf_fields(url=ConnectionString.SF_URL, sfobj_api='Resume_Google_Drive_Link__c', )
+        values = [value['label'] for value in fields[17]['picklistValues']]
+        print(values)
 
 
 # import datetime

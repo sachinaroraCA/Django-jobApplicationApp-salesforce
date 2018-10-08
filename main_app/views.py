@@ -9,12 +9,11 @@ import re
 
 
 def home(request):
+    sf = SFConnectAPI()
+    designations = sf.get_position_values()
     return render(request,
                   "application_form.html",
-                  {'designations': ['Developer', 'Consultant', 'HR', 'QA',
-                                    'Bussiness Developer Executive', 'Content Writer',
-                                    'UI Developer', 'Sales Executive',
-                                    'Web Developer', 'Sales']})
+                  {'designations': designations})
 
 
 def upload_details(request):
