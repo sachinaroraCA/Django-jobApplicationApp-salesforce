@@ -117,7 +117,6 @@ class SFConnectAPI:
                                    session_id=self.security_token,
                                    sf_instance=url)
             describe = sftype_object.describe(headers=None)
-            print(json.dumps(describe))
             sf_object_fields = describe['fields']
             return sf_object_fields
         return None
@@ -126,6 +125,7 @@ class SFConnectAPI:
         fields = self.get_sf_fields(url=ConnectionString.SF_URL, sfobj_api='Resume_Google_Drive_Link__c', )
         values = [value['label'] for value in fields[17]['picklistValues']]
         print(values)
+        return values
 
 
 # import datetime

@@ -11,6 +11,7 @@ import re
 def home(request):
     sf = SFConnectAPI()
     designations = sf.get_position_values()
+    print(designations)
     return render(request,
                   "application_form.html",
                   {'designations': designations})
