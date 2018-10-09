@@ -299,6 +299,11 @@ hr {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 60px; opacity: 0;}
 }
+.drag-label {
+    background-color:grey;
+    text-align:center;
+    color:white;
+}
 </style>
 
 <body>
@@ -348,10 +353,14 @@ hr {
                             </label>
                             <input type="email" class="form-control" id="Email__c" name="Email__c" required />
                         </div>
-                        <div class="form-group color">
-                            <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
-                          <input type="file" class="form-control" id="id_resumeFile" name="resumeFile" required />
+                       <div class="form-group color">
+                        <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
+                        <div>
+                            <p class="drag-label">drag and drop file here
+                      <input type="file" placeholder="drag and drop file here" class="form-control" id="id_resumeFile" name="resumeFile" required />
+                       </p>
                         </div>
+                    </div>
                 <div class="form-group">
                 <div class="form-group">
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
