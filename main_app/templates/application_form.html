@@ -35,10 +35,10 @@ $(document).ready( function() {
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if (name.value == null || name.value == "" || name.value.length == 0) {
-            error = "Name field not filled or invalid name !!! ";
+            error = " Enter a valid Name !!! ";
             name.focus();
         } else if ( phone.value == '' ||phone.value == null || !(phone.value.match(phoneno_pattern)) ) {
-            error = "Phone number field not filled or invalid field value !!! ";
+            error = "Enter a valid Phone number field !!! ";
             phone.focus();
         }
         else if(!email.value.match(mailformat))
@@ -55,20 +55,19 @@ $(document).ready( function() {
         }
         if (error == null) {
             document.getElementById('spin_div').style.visibility = 'visible';
-            document.getElementById('upload_button').style.visibility = 'visible';
-            document.getElementById('submit_btn').style.visibility = 'hidden';
             document.getElementById("usrform").submit();
         }
         else {
-        $.alert({
-            title: 'Error!',
-            content: error,
-        });
+         var x = document.getElementById("toast")
+            x.className = "show";
+            $("#desc").html(error);
+		   setTimeout(function(){ x.className = x.className.replace("show", ""); },3000);
         }
     });
     setTimeout(function() {
      $('#final_msg').fadeOut();
     }, 1800 );
+    document.getElementById('error_msg').html("Error");
 });
 </script>
 
@@ -76,9 +75,6 @@ $(document).ready( function() {
 .files input {
     outline: 2px dashed #92b0b3;
     outline-offset: -10px;
-    position: absolute;
-    opacity: 0;
-    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
     transition: outline-offset .15s ease-in-out, background-color .15s linear;
     padding: 120px 0px 85px 35%;
@@ -99,6 +95,7 @@ $(document).ready( function() {
     right: 0;
     height: 56px;
     content: "";
+    background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
     display: block;
     margin: 0 auto;
     background-size: 100%;
@@ -192,13 +189,13 @@ hr {
 	width: 100%;
 	height: 100%;
 	z-index: 9999;
-	background: url("https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif") center no-repeat #fff;
+	background: url("https://i0.wp.com/www.dynamocoop.be/wp-content/uploads/2015/10/spin.gif") center no-repeat #fff;
 }
 .form-wrapper input {
     box-sizing: border-box;
 }
 .main-padding {
-    padding:5% 10% 5% 10%;
+    padding:2% 5% 2% 5%;
 }
 .message-position {
     position: absolute;
@@ -208,71 +205,176 @@ hr {
     visibility: hidden;
     opacity: .6;
 }
+
+
+#toast {
+    visibility: hidden;
+    max-width: 50px;
+    height: 50px;
+    /*margin-left: -125px;*/
+    margin: auto;
+    background-color: #ff6363;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+}
+#toast #img{
+	width: 50px;
+	height: 50px;
+
+    float: left;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    box-sizing: border-box;
+
+
+    background-color: #ff6363;
+    color: #fff;
+}
+#toast #desc{
+
+
+    color: #fff;
+
+    padding: 16px;
+
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
 </style>
 
 <body>
-    <div id="final_msg" class="message-position">
+<!--<div id="toast">-->
+	<!--<div id="img" ><span class="glyphicon glyphicon-warning-sign"> </span></div>-->
+	<!--<div id="desc"></div>-->
+<!--</div>-->
+    <div class="message-position">
     {% if messages %}
     {% for msg in messages %}
-        <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+        <div id="final_msg" class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
             <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
             {{msg.tags|title}}: {{msg.message}}
         </div>
-        {% endfor %}
-        {% endif %}
+    {% endfor %}
+    {% endif %}
     </div>
-    <div class="main-padding">
-        <div id="spin_div" class="se-pre-con blur_spinner">
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
-                    {% csrf_token %}
-                    <div class="well well-sm">
-                        <small><span class="glyphicon glyphicon-user"> </span></small>
-                        <span>&nbsp; Personal Information</span>
-                    </div>
-                      <div class="panel panel-default">
-                  <div class="panel-body">
-                            <div class="form-group">
-                                <label for="name">
-                                    <span style="color:red;">*</span> Name
-                                </label>
-                                <input type="text" name="name" class="form-control" required id="name" />
-                            </div>
-                            <div class="form-group">
-                                <label for="Contact_Number__c">
-                                    <span style="color:red;">*</span> Mobile
-                                </label>
-                                <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
-                            </div>
-                            <div class="form-group">
-                                <label for="Email__c">
-                                    <span style="color:red;">*</span> Email
-                                </label>
-                                <input type="email" class="form-control" id="Email__c" required name="Email__c" />
-                            </div>
-                            <div class="form-group color">
-                                <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
-                              <input type="file" class="form-control" id="id_resumeFile" aria-label="Drag and drop resume file here"  required  name="resumeFile" />
-                            </div>
-                    <div class="form-group">
-                      <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-                      <select class="form-control" id="Designation__c" required name="Designation__c">
-                          {% for item in designations %}
-                          <option {% ifequal item "Developer" %}selected{% endifequal %}>{{item}}</option>
-                          {% endfor %}
-                      </select>
-                    </div>
+<div class="main-padding">
+    <div id="spin_div" class="se-pre-con blur_spinner">
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body" >
+            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <div class="well well-sm">
+                    <small><span class="glyphicon glyphicon-user"> </span></small>
+                    <span>&nbsp; Personal Information</span>
+                </div>
+                  <div class="panel panel-default">
+              <div class="panel-body">
+                        <div class="form-group">
+                            <label for="name">
+                                <span style="color:red;">*</span> Name
+                            </label>
+                            <input type="text" name="name" class="form-control" required id="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Contact_Number__c">
+                                <span style="color:red;">*</span> Mobile
+                            </label>
+                            <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+"  name="Contact_Number__c" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email__c">
+                                <span style="color:red;">*</span> Email
+                            </label>
+                            <input type="email" class="form-control" id="Email__c" name="Email__c" required />
+                        </div>
+                        <div class="form-group color">
+                            <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
+                          <input type="file" class="form-control" id="id_resumeFile" name="resumeFile" required />
+                        </div>
+                <div class="form-group">
+                <div class="form-group">
+                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
+                  <select class="form-control" id="Designation__c" name="Designation__c" required>
+                      {% for item in designations %}
+                      {% if not item.label %}
+                      <option>{{item}}</option>
+                      {% else %}
+                      <option label="{{item.label}}" value="{{item.value}}" ></option>
+                      {% endif %}
+                      {% endfor %}
+                  </select>
+                </div>
                     </div>
                 </div>
-                    <button type="submit" id="submit_btn" class="btn btn-primary" >
-                        Save
-                    </button>
-                </form>
-
             </div>
+                <button type="submit" id="submit_btn" class="btn btn-primary" >
+                    Save
+                </button>
+            </form>
         </div>
     </div>
+</div>
+
 </body>
 </html>
