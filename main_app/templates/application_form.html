@@ -204,6 +204,10 @@ hr {
     position: absolute;
     width:100%;
 }
+.blur_spinner {
+    visibility: hidden;
+    opacity: .6;
+}
 </style>
 
 <body>
@@ -218,11 +222,12 @@ hr {
         {% endif %}
     </div>
     <div class="main-padding">
-        <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
+        <div id="spin_div" class="se-pre-con blur_spinner">
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
                 <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
                     <div class="well well-sm">
                         <small><span class="glyphicon glyphicon-user"> </span></small>
                         <span>&nbsp; Personal Information</span>
