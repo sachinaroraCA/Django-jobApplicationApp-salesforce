@@ -31,7 +31,7 @@ def upload_details(request):
                 return HttpResponseRedirect('/home/')
 
             if not re.match('^[0-9]+$', contact) or len(contact) != 10:
-                messages.error(request, "Error: Phone field must contains only Numbers")
+                messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
                 return HttpResponseRedirect('/home/')
 
             file_name = name + " | " + contact + " | " + email
