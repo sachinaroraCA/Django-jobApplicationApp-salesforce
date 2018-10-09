@@ -66,6 +66,9 @@ $(document).ready( function() {
         });
         }
     });
+    setTimeout(function() {
+     $('#final_msg').fadeOut();
+    }, 1800 );
 });
 </script>
 
@@ -194,70 +197,77 @@ hr {
 .form-wrapper input {
     box-sizing: border-box;
 }
+.main-padding {
+    padding:5% 10% 5% 10%;
+}
+.message-position {
+    position: absolute;
+    width:100%;
+}
 </style>
 
 <body>
-<div >
-    <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
+    <div class="message-position">
+    {% if messages %}
+    {% for msg in messages %}
+        <div id="final_msg" class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+            <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+            {{msg.tags|title}}: {{msg.message}}
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
-            {% if messages %}
-                {% for msg in messages %}
-                <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
-                    <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
-                    {{msg.tags|title}}: {{msg.message}}
+    <div class="main-padding">
+        <div id="spin_div" style="visibility: hidden;" class="se-pre-con">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+                    <div class="well well-sm">
+                        <small><span class="glyphicon glyphicon-user"> </span></small>
+                        <span>&nbsp; Personal Information</span>
+                    </div>
+                      <div class="panel panel-default">
+                  <div class="panel-body">
+                            <div class="form-group">
+                                <label for="name">
+                                    <span style="color:red;">*</span> Name
+                                </label>
+                                <input type="text" name="name" class="form-control" required id="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Contact_Number__c">
+                                    <span style="color:red;">*</span> Mobile
+                                </label>
+                                <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Email__c">
+                                    <span style="color:red;">*</span> Email
+                                </label>
+                                <input type="email" class="form-control" id="Email__c" required name="Email__c" />
+                            </div>
+                            <div class="form-group color">
+                                <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
+                              <input type="file" class="form-control" id="id_resumeFile" aria-label="Drag and drop resume file here"  required  name="resumeFile" />
+                            </div>
+                    <div class="form-group">
+                      <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
+                      <select class="form-control" id="Designation__c" required name="Designation__c">
+                          {% for item in designations %}
+                          <option {% ifequal item "Developer" %}selected{% endifequal %}>{{item}}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    </div>
                 </div>
-                {% endfor %}
-            {% endif %}
-                {% csrf_token %}
-                <div class="well well-sm">
-                    <small><span class="glyphicon glyphicon-user"> </span></small>
-                    <span>&nbsp; Personal Information</span>
-                </div>
-                  <div class="panel panel-default">
-              <div class="panel-body">
-                        <div class="form-group">
-                            <label for="name">
-                                <span style="color:red;">*</span> Name
-                            </label>
-                            <input type="text" name="name" class="form-control" required id="name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="Contact_Number__c">
-                                <span style="color:red;">*</span> Mobile
-                            </label>
-                            <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+" required name="Contact_Number__c" />
-                        </div>
-                        <div class="form-group">
-                            <label for="Email__c">
-                                <span style="color:red;">*</span> Email
-                            </label>
-                            <input type="email" class="form-control" id="Email__c" required name="Email__c" />
-                        </div>
-                        <div class="form-group color">
-                            <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
-                          <input type="file" class="form-control" id="id_resumeFile" aria-label="Drag and drop resume file here"  required  name="resumeFile" />
-                        </div>
-                <div class="form-group">
-                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-                  <select class="form-control" id="Designation__c" required name="Designation__c">
-                      {% for item in designations %}
-                      <option {% ifequal item "Developer" %}selected{% endifequal %}>{{item}}</option>
-                      {% endfor %}
-                  </select>
-                </div>
-                </div>
-            </div>
-                <button type="submit" id="submit_btn" class="btn btn-primary" >
-                    Save
-                </button>
-            </form>
+                    <button type="submit" id="submit_btn" class="btn btn-primary" >
+                        Save
+                    </button>
+                </form>
 
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 </html>
