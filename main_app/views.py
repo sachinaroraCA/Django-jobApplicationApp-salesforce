@@ -65,7 +65,7 @@ def upload_details(request):
 
                 if result['success']:
                     messages.success(request, 'You have applied successfully !!!')
-                    return render( request, "/")
+                    return HttpResponseRedirect( '/' )
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')

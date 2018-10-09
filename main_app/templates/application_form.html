@@ -211,10 +211,10 @@ hr {
 </style>
 
 <body>
-    <div class="message-position">
+    <div id="final_msg" class="message-position">
     {% if messages %}
     {% for msg in messages %}
-        <div id="final_msg" class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+        <div class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
             <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
             {{msg.tags|title}}: {{msg.message}}
         </div>
