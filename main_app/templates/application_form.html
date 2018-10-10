@@ -79,6 +79,7 @@ $(document).ready( function() {
     text-align: center !important;
     margin: 0;
     width: 100% !important;
+    height:200% !important;
 }
 .files input:focus{     outline: 2px dashed #92b0b3;  outline-offset: -10px;
     -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
@@ -314,7 +315,7 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
 }
 </style>
 
-<body>
+<body style="background-color: #313a43!important;">
 <!--<div id="toast">-->
 	<!--<div id="img" ><span class="glyphicon glyphicon-warning-sign"> </span></div>-->
 	<!--<div id="desc"></div>-->
@@ -332,7 +333,7 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
 <div class="main-padding">
     <div id="spin_div" class="se-pre-con blur_spinner">
     </div>
-    <div class="panel panel-default dark-bg">
+    <div class="panel panel-default">
         <div class="panel-body dark-bg" >
             <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
@@ -363,7 +364,7 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
                         <div>
                             <p class="drag-label">drag and drop file
                                 <small><span class="glyphicon glyphicon-upload"> </span></small>
-                      <input type="file" value="{{file}}" class="form-control" id="id_resumeFile" style="heiight:200%;" name="resumeFile" required />
+                      <input type="file" value="{{file}}" class="form-control" id="id_resumeFile" name="resumeFile" required />
                        </p>
                         </div>
                     </div>
