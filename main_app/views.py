@@ -12,9 +12,10 @@ def home(request):
     sf = SFConnectAPI()
     designations = sf.get_position_values()
     print(designations)
+    designation = 'Developer'
     return render(request,
                   "application_form.html",
-                  {'designations': designations})
+                  {'designations': designations,'designation':designation})
 
 
 def upload_details(request):
@@ -28,11 +29,19 @@ def upload_details(request):
 
             if not name or name == "" or not bool(re.match('^[a-zA-Z ]+$', name)):
                 messages.error(request, "Error: Name field must contains only Characters")
-                return HttpResponseRedirect('/home/')
+                sf = SFConnectAPI()
+                designations = sf.get_position_values()
+                return HttpResponseRedirect('/home/',{'designations': designations,
+                                                      'designation':designation,
+                                                      'email':email,
+                                                      "contact":contact,
+                                                      "resume":resume,
+                                                      })
 
-            if not re.match('^[0-9]+$', contact) or len(contact) != 10:
+            elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
-                return HttpResponseRedirect('/home/')
+                return HttpResponseRedirect('/home/', )
+
 
             file_name = name + " | " + contact + " | " + email
             folder_info = get_folder_id(designation)
@@ -64,7 +73,7 @@ def upload_details(request):
                     print(result["id"] + " created")
 
                 if result['success']:
-                    messages.success(request, 'You have applied successfully !!!')
+                    messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
                     return HttpResponseRedirect( '/' )
                 else:
                     print("Record not created in salesforce:" + str(result))
