@@ -302,6 +302,16 @@ hr {
     text-align:center;
     color:white;
 }
+input.text, input.title, input[type=email], input[type=password], input[type=tel], input[type=text], select, textarea {
+    background-color: #fefefe !important;
+    color: #000 !important;
+    margin-bottom: 15px;
+}
+.dark-bg {
+	background-color: #313a43!important;
+    color: white;
+    padding: 10% 10% 10% 10%;
+}
 </style>
 
 <body>
@@ -322,17 +332,14 @@ hr {
 <div class="main-padding">
     <div id="spin_div" class="se-pre-con blur_spinner">
     </div>
-
     <div class="panel panel-default">
-        <div class="panel-body" >
+        <div class="panel-body dark-bg" >
             <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
-                <div class="well well-sm">
-                    <small><span class="glyphicon glyphicon-user"> </span></small>
-                    <span>&nbsp; Personal Information</span>
-                </div>
-                  <div class="panel panel-default">
-              <div class="panel-body">
+                <!--<div class="well well-sm">-->
+                    <!--<small><span class="glyphicon glyphicon-user"> </span></small>-->
+                    <!--<span>&nbsp; Personal Information</span>-->
+                <!--</div>-->
                         <div class="form-group">
                             <label for="name">
                                 <span style="color:red;">*</span> Name
@@ -360,7 +367,6 @@ hr {
                         </div>
                     </div>
                 <div class="form-group">
-                <div class="form-group">
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
                   <select class="form-control"  id="Designation__c" name="Designation__c" required>
                       {% for item in designations %}
@@ -368,9 +374,6 @@ hr {
                       {% endfor %}
                   </select>
                 </div>
-                    </div>
-                </div>
-            </div>
                 <button type="submit" id="submit_btn" class="btn btn-primary" >
                     Save
                 </button>
