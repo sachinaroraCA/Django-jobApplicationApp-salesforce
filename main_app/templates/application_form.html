@@ -9,6 +9,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<!--
+  DO NOT SIMPLY COPY THOSE LINES. Download the JS and CSS files from the
+  latest release (https://github.com/enyo/dropzone/releases/latest), and
+  host them yourself!
+-->
+
+<script src="static/js/dropzone.js"></script>
+<link rel="stylesheet" href="static/css/dropzone.css">
+<!--script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css" -->
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
 <script type="text/javascript">
 
@@ -23,25 +35,17 @@ $(document).ready( function() {
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if (name.value == null || name.value == "" || name.value.length == 0) {
-            error = " Enter a valid Name !!! ";
             name.focus();
         } else if ( phone.value == '' ||phone.value == null || !(phone.value.match(phoneno_pattern)) ) {
-            error = "Enter a valid Phone number field !!! ";
             phone.focus();
         }
         else if(!email.value.match(mailformat))
         {
-            error = "Email field not filled or invalid field value !!!";
             email.focus();
         }
         else if (resume.files.length == 0 ) {
-            error = "Upload your resume !!!";
             resume.focus();
         }
-        else {
-            error = null;
-        }
-        if (error == null) {
             document.getElementById('spin_div').style.visibility = 'visible';
             /* document.getElementById("usrform").submit() */
             $.ajax({
@@ -54,13 +58,11 @@ $(document).ready( function() {
             x.className = "hide";
 				}
 			});
-        }
-        else {
+
          var x = document.getElementById("toast")
             x.className = "show";
             $("#desc").html(error);
 		   setTimeout(function(){ x.className = x.className.replace("show", ""); },3000);
-        }
     });
     setTimeout(function() {
      $('#final_msg').fadeOut();
@@ -325,7 +327,7 @@ hr {
 
     <div class="panel panel-default">
         <div class="panel-body" >
-            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+            <form role="form" id="usrform" name="usrform" action="" method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
                 <div class="well well-sm">
                     <small><span class="glyphicon glyphicon-user"> </span></small>
