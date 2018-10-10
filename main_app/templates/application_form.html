@@ -361,8 +361,9 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
                        <div class="form-group color">
                         <label for="id_resumeFile" ><span style="color:red;">*</span> Resume</label>
                         <div>
-                            <p class="drag-label">drag and drop file here
-                      <input type="file" value="{{file}}" placeholder="drag and drop file here" class="form-control" id="id_resumeFile" name="resumeFile" required />
+                            <p class="drag-label">drag and drop file
+                                <small><span class="glyphicon glyphicon-upload"> </span></small>
+                      <input type="file" value="{{file}}" class="form-control" id="id_resumeFile" style="heiight:200%;" name="resumeFile" required />
                        </p>
                         </div>
                     </div>
