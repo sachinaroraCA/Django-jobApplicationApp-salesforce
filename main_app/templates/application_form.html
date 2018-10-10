@@ -15,10 +15,8 @@
   host them yourself!
 -->
 
-<script src="static/js/dropzone.js"></script>
-<link rel="stylesheet" href="static/css/dropzone.css">
-<!--script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css" -->
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 
@@ -205,6 +203,100 @@ hr {
     visibility: hidden;
     opacity: .6;
 }
+
+
+#toast {
+    visibility: hidden;
+    max-width: 50px;
+    height: 50px;
+    /*margin-left: -125px;*/
+    margin: auto;
+    background-color: #ff6363;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+
+    position: fixed;
+    z-index: 1;
+    left: 0;right:0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+}
+#toast #img{
+	width: 50px;
+	height: 50px;
+
+    float: left;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    box-sizing: border-box;
+
+
+    background-color: #ff6363;
+    color: #fff;
+}
+#toast #desc{
+
+
+    color: #fff;
+
+    padding: 16px;
+
+    overflow: hidden;
+	white-space: nowrap;
+}
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+
+@keyframes expand {
+    from {min-width: 50px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+
+@keyframes stay {
+    from {min-width: 350px}
+    to {min-width: 350px}
+}
+@-webkit-keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@keyframes shrink {
+    from {min-width: 350px;}
+    to {min-width: 50px;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 60px; opacity: 0;}
+}
 </style>
 
 <body>
@@ -236,42 +328,43 @@ hr {
                 </div>
                   <div class="panel panel-default">
               <div class="panel-body">
-                        <div class="form-group">
-                            <label for="name">
-                                <span style="color:red;">*</span> Name
-                            </label>
-                            <input type="text" name="name" class="form-control" required id="name" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="Contact_Number__c">
-                                <span style="color:red;">*</span> Mobile
-                            </label>
-                            <input type="tel" class="form-control" id="Contact_Number__c" name="Contact_Number__c" minlength="10" maxlength="10" pattern="[0-9]+" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="Email__c">
-                                <span style="color:red;">*</span> Email
-                            </label>
-                            <input type="email" class="form-control" id="Email__c" name="Email__c" required />
-                        </div>
-                       <div class="form-group color">
+                    <div class="form-group">
+                        <label for="name">
+                            <span style="color:red;">*</span> Name
+                        </label>
+                        <input type="text" name="name" class="form-control" required id="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Contact_Number__c">
+                            <span style="color:red;">*</span> Mobile
+                        </label>
+                        <input type="tel" class="form-control" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+"  name="Contact_Number__c" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email__c">
+                            <span style="color:red;">*</span> Email
+                        </label>
+                        <input type="email" class="form-control" id="Email__c" name="Email__c" required />
+                    </div>
+
+                    <div class="form-group color">
                         <label for="id_resumeFile"><span style="color:red;">*</span> Resume</label>
                         <div>
-                            <p class="drag-label">drag and drop file here
+                            <p style="background-color:grey;text-align:center;color:white;">drag and drop file here
                       <input type="file" placeholder="drag and drop file here" class="form-control" id="id_resumeFile" name="resumeFile" required />
                        </p>
                         </div>
                     </div>
                 <div class="form-group">
-                <div class="form-group">
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
                   <select class="form-control" id="Designation__c" name="Designation__c" required>
                       {% for item in designations %}
-                      <option {% ifequal item "Developer" %}selected{% endifequal %}>{{item}}</option>
+                      {% if not item.label %}
+                      <option >{{item}}</option>
+                      {% endif %}
                       {% endfor %}
                   </select>
                 </div>
-                    </div>
                 </div>
             </div>
                 <button type="submit" id="submit_btn" class="btn btn-primary" >
