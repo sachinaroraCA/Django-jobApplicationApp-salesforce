@@ -337,7 +337,7 @@ hr {
                             <label for="name">
                                 <span style="color:red;">*</span> Name
                             </label>
-                            <input type="text" name="name" value="{{name}}" class="form-control" required id="name" required />
+                            <input type="text" name="name" value="{{name}}" class="form-control" id="name" required />
                         </div>
                         <div class="form-group">
                             <label for="Contact_Number__c">
@@ -363,7 +363,6 @@ hr {
                 <div class="form-group">
                   <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
                   <select class="form-control"  id="Designation__c" name="Designation__c" required>
-                      {% if designation %}
                       {% for item in designations %}
                       <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
                       {% endfor %}
