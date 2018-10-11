@@ -25,6 +25,7 @@ def upload_details(request):
             email = request.POST.get("Email__c")
             contact = request.POST.get("Contact_Number__c")
             resume = request.FILES["resumeFile"]
+            resume_field = request.POST.get("resumeFile")
             designation = request.POST.get("Designation__c")
 
             if not name or name == "" or not bool(re.match('^[a-zA-Z ]+$', name)):
@@ -32,12 +33,14 @@ def upload_details(request):
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
                 return render( request,
-                               "application_form.html", {'designations': designations,
+                               "application_form.html",  {
+                                                        'name':name,
+                                                        'designations': designations,
                                                       'designation':designation,
                                                       'email':email,
                                                       "contact":contact,
-                                                      "resume":resume,
-                                                      })
+                                                      "resume":resume_field,
+                                                      } )
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 sf = SFConnectAPI()
@@ -45,12 +48,12 @@ def upload_details(request):
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
                 return render( request,
                                "application_form.html", {
-                        'name':name,
+                                                        'name':name,
                                                         'designations': designations,
                                                       'designation':designation,
                                                       'email':email,
                                                       "contact":contact,
-                                                      "resume":resume,
+                                                      "resume":resume_field,
                                                       } )
 
 
