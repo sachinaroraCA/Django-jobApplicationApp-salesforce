@@ -31,7 +31,8 @@ def upload_details(request):
                 messages.error(request, "Error: Name field must contains only Characters")
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
-                return HttpResponseRedirect('/home/',{'designations': designations,
+                return render( request,
+                               "application_form.html", {'designations': designations,
                                                       'designation':designation,
                                                       'email':email,
                                                       "contact":contact,
@@ -39,8 +40,16 @@ def upload_details(request):
                                                       })
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
+                sf = SFConnectAPI()
+                designations = sf.get_position_values()
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
-                return HttpResponseRedirect('/home/', )
+                return render( request,
+                               "application_form.html", {'designations': designations,
+                                                      'designation':designation,
+                                                      'email':email,
+                                                      "contact":contact,
+                                                      "resume":resume,
+                                                      } )
 
 
             file_name = name + " | " + contact + " | " + email
