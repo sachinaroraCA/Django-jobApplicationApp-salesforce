@@ -32,29 +32,29 @@ def upload_details(request):
                 messages.error(request, "Error: Name field must contains only Characters")
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
-                return render( request,
+                return render(request,
                                "application_form.html",  {
                                                         'name':name,
                                                         'designations': designations,
-                                                      'designation':designation,
-                                                      'email':email,
-                                                      "contact":contact,
-                                                      "resume":resume_field,
-                                                      } )
+                                                        'designation':designation,
+                                                        'email':email,
+                                                        "contact":contact,
+                                                        "resume":resume_field,
+                                                      })
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
-                return render( request,
+                return render(request,
                                "application_form.html", {
                                                         'name':name,
                                                         'designations': designations,
-                                                      'designation':designation,
-                                                      'email':email,
-                                                      "contact":contact,
-                                                      "resume":resume_field,
-                                                      } )
+                                                        'designation':designation,
+                                                        'email':email,
+                                                        "contact":contact,
+                                                        "resume":resume_field,
+                                                      })
 
 
             file_name = name + " | " + contact + " | " + email
@@ -88,7 +88,7 @@ def upload_details(request):
 
                 if result['success']:
                     messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
-                    return HttpResponseRedirect( '/' )
+                    return HttpResponseRedirect('/')
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
@@ -98,4 +98,4 @@ def upload_details(request):
     except Exception as ex:
         print("Exception:" + repr(ex))
         messages.error(request, 'Unable to process request.. try again later !!!')
-    return HttpResponseRedirect( '/' )
+    return HttpResponseRedirect('/')
