@@ -334,40 +334,40 @@ body, input, textarea, select {
                     <!--<small><span class="glyphicon glyphicon-user"> </span></small>-->
                     <!--<span>&nbsp; Personal Information</span>-->
                 <!--</div>-->
-                        <div class="form-group">
-                            <label for="name">
-                                <span style="color:red;">*</span> Name
-                            </label>
-                            <input type="text" name="name" value="{{name}}" class="form-control" id="name" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="Contact_Number__c">
-                                <span style="color:red;">*</span> Mobile
-                            </label>
-                            <input type="tel" class="form-control" id="Contact_Number__c" name="Contact_Number__c" value="{{contact}}"  minlength="10" maxlength="10" pattern="[0-9]+" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="Email__c">
-                                <span style="color:red;">*</span> Email
-                            </label>
-                            <input type="email" class="form-control" value="{{email}}" id="Email__c" name="Email__c" required />
-                        </div>
-                       <div class="form-group color">
-                        <label for="id_resumeFile" ><span style="color:red;">*</span> Resume</label>
-                        <div>
-                            <p class="drag-label">drag and drop file
-                                <small><span class="glyphicon glyphicon-upload"> </span></small>
-                      <input type="file" value="{{resume}}" class="form-control" id="id_resumeFile" name="resumeFile" required />
-                       </p>
-                        </div>
+                    <div class="form-group">
+                        <label for="name">
+                            <span style="color:red;">*</span> Your Name
+                        </label>
+                        <input type="text" name="name" value="{{name}}" class="form-control" id="name" required />
                     </div>
-                <div class="form-group">
-                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-                  <select class="form-control"  id="Designation__c" name="Designation__c" required>
-                      {% for item in designations %}
-                      <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
-                      {% endfor %}
-                  </select>
+                    <div class="form-group">
+                        <label for="Contact_Number__c">
+                            <span style="color:red;">*</span> Contact no.
+                        </label>
+                        <input type="tel" class="form-control" id="Contact_Number__c" name="Contact_Number__c" value="{{contact}}"  minlength="10" maxlength="10" pattern="[0-9]+" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Email__c">
+                            <span style="color:red;">*</span> Your Email
+                        </label>
+                        <input type="email" class="form-control" value="{{email}}" id="Email__c" name="Email__c" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="Designation__c"><span style="color:red;">*</span> Position</label>
+                      <select class="form-control"  id="Designation__c" name="Designation__c" required>
+                          {% for item in designations %}
+                          <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                   <div class="form-group color">
+                    <label for="id_resumeFile" ><span style="color:red;">*</span> Resume</label>
+                    <div>
+                        <p class="drag-label">drag and drop file Attachment (Only - doc, docx, pdf file)
+                            <small><span class="glyphicon glyphicon-upload"> </span></small>
+                  <input type="file" value="{{resume}}" class="form-control" accept=".pdf,.doc,.docx" id="id_resumeFile" name="resumeFile" required />
+                   </p>
+                    </div>
                 </div>
                 <button type="submit" id="submit_btn" class="btn btn-primary" >
                     Save
