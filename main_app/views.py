@@ -44,7 +44,9 @@ def upload_details(request):
                 designations = sf.get_position_values()
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
                 return render( request,
-                               "application_form.html", {'designations': designations,
+                               "application_form.html", {
+                        'name':name,
+                                                        'designations': designations,
                                                       'designation':designation,
                                                       'email':email,
                                                       "contact":contact,
