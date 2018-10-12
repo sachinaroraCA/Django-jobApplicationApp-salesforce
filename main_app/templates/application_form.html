@@ -62,7 +62,7 @@ $(document).ready( function() {
             url: "/upload_details/",
             success:function(resp){
             console.log(resp);
-            $("#error_message").append(resp.msg_html);
+            $("#error_message").append(resp);
             }
             });
 

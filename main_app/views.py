@@ -82,11 +82,7 @@ def upload_details(request):
 
                 if result['success']:
                     # messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
-                    msg_html = render_to_string(request,
-                                                "message.html", {
-                                                    "msg": "'Thank you for apply successfully in Cloudanalogy !!!'"
-                                                    })
-                    return {"msg_html": msg_html}
+                    return HttpResponse("Thank you for apply successfully in Cloudanalogy !!! ")
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
