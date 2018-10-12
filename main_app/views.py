@@ -3,12 +3,12 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
-
 from main_app.utils.drive_api import GoogleDrive
 from main_app.utils.ip_location_utils import get_ip_address, get_city, get_location
 from main_app.utils.sf_api import SFConnectAPI
 from main_app.utils.drive_utils import get_folder_id
 import re
+
 
 
 @csrf_exempt
@@ -46,7 +46,7 @@ def upload_details(request):
                 designations = sf.get_position_values()
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
                 msg_html = render_to_string(request,
-                               "message.html", { "msg":"Error: Phone field must contains only Numbers and length should be 10"
+                               "message.html", { "msg": "Error: Phone field must contains only Numbers and length should be 10"
                                                       })
                 return {"msg_html": msg_html}
 
@@ -81,7 +81,7 @@ def upload_details(request):
                     print(result["id"] + " created")
 
                 if result['success']:
-                    messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
+                    # messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
                     msg_html = render_to_string(request,
                                                 "message.html", {
                                                     "msg": "'Thank you for apply successfully in Cloudanalogy !!!'"
