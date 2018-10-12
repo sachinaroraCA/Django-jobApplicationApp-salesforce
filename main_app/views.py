@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.template.loader import render_to_string
+
 from main_app.utils.drive_api import GoogleDrive
 from main_app.utils.ip_location_utils import get_ip_address, get_city, get_location
 from main_app.utils.sf_api import SFConnectAPI
@@ -32,29 +34,18 @@ def upload_details(request):
                 messages.error(request, "Error: Name field must contains only Characters")
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
-                return render(request,
-                               "application_form.html",  {
-                                                        'name':name,
-                                                        'designations': designations,
-                                                        'designation':designation,
-                                                        'email':email,
-                                                        "contact":contact,
-                                                        "resume":resume_field,
-                                                      })
+                msg_html = render_to_string(request,
+                               "message.html",  {'msg':"Name field must contains only Characters"})
+                return {"msg_html": msg_html}
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 sf = SFConnectAPI()
                 designations = sf.get_position_values()
                 messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
-                return render(request,
-                               "application_form.html", {
-                                                        'name':name,
-                                                        'designations': designations,
-                                                        'designation':designation,
-                                                        'email':email,
-                                                        "contact":contact,
-                                                        "resume":resume_field,
+                msg_html = render_to_string(request,
+                               "message.html", { "msg":"Error: Phone field must contains only Numbers and length should be 10"
                                                       })
+                return {"msg_html": msg_html}
 
 
             file_name = name + " | " + contact + " | " + email

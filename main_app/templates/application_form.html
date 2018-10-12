@@ -55,7 +55,17 @@ $(document).ready( function() {
         }
         if (error == null) {
             document.getElementById('spin_div').style.visibility = 'visible';
-            document.getElementById("usrform").submit();
+            // document.getElementById("usrform").submit();
+            $.ajax({
+            type:"POST",
+            data:{"name":name,"phone":phone,"email":email,"resume":resume},
+            url: "/upload_details/",
+            success:function(resp){
+            console.log(resp);
+            $("#error_message").append(resp.msg_html);
+            }
+            });
+
         }
         else {
          var x = document.getElementById("toast")
@@ -330,6 +340,8 @@ body, input, textarea, select {
     </div>
     <div class="panel panel-default">
         <div class="panel-body dark-bg" >
+            <div id = "error_message">
+            </div>
             <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
                 {% csrf_token %}
                 <!--<div class="well well-sm">-->
