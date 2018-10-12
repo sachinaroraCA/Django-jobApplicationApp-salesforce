@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
 
 from main_app.utils.drive_api import GoogleDrive
 from main_app.utils.ip_location_utils import get_ip_address, get_city, get_location
@@ -10,6 +11,7 @@ from main_app.utils.drive_utils import get_folder_id
 import re
 
 
+@csrf_exempt
 def home(request):
     sf = SFConnectAPI()
     designations = sf.get_position_values()
@@ -20,6 +22,7 @@ def home(request):
                   {'designations': designations,'designation':designation})
 
 
+@csrf_exempt
 def upload_details(request):
     try:
         if request.method == 'POST':
