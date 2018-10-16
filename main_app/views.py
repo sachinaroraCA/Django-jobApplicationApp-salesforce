@@ -1,25 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, StreamingHttpResponse
+from django.template import RequestContext, Context
 from django.template.loader import render_to_string
+from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from main_app.utils.drive_api import GoogleDrive
 from main_app.utils.ip_location_utils import get_ip_address, get_city, get_location
 from main_app.utils.sf_api import SFConnectAPI
 from main_app.utils.drive_utils import get_folder_id
 import re
+import json
 
-
+DEFAULT_DESIGNATION = "Developer"
 
 @csrf_exempt
 def home(request):
     sf = SFConnectAPI()
     designations = sf.get_position_values()
     print(designations)
-    designation = 'Developer'
+    designation = DEFAULT_DESIGNATION
     return render(request,
-                  "application_form.html",
-                  {'designations': designations,'designation':designation})
+                  "form.html",
+                  {'designations': designations, 'designation': designation})
 
 
 @csrf_exempt
@@ -33,23 +36,26 @@ def upload_details(request):
             resume_field = request.POST.get("resumeFile")
             designation = request.POST.get("Designation__c")
 
+            # t = loader.get_template("message.html")
+            # c = {'msg': "Phone field must contains only Numbers and length should be 10"}
+            # html_string = render_to_string("message.html", {'msg': "Phone field must contains only Numbers and length should be 10"}, request )
+
+            # return HttpResponse(json.dumps({"name": "Aman", "email": "Aman Preet Singh" }))
+
+            sf = SFConnectAPI()
+            designations = sf.get_position_values()
+
             if not name or name == "" or not bool(re.match('^[a-zA-Z ]+$', name)):
-                messages.error(request, "Error: Name field must contains only Characters")
-                sf = SFConnectAPI()
-                designations = sf.get_position_values()
-                msg_html = render_to_string(request,
-                               "message.html",  {'msg':"Name field must contains only Characters"})
-                return {"msg_html": msg_html}
+                messages.error(request, "Name field must contains only Characters")
+                return render(request,
+                              "form.html",
+                              {'designations': designations, 'designation': designation})
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
-                sf = SFConnectAPI()
-                designations = sf.get_position_values()
-                messages.error(request, "Error: Phone field must contains only Numbers and length should be 10")
-                msg_html = render_to_string(request,
-                               "message.html", { "msg": "Error: Phone field must contains only Numbers and length should be 10"
-                                                      })
-                return {"msg_html": msg_html}
-
+                messages.error(request, "Phone field must contains only Numbers and length should be 10")
+                return render(request,
+                              "form.html",
+                              {'designations': designations, 'designation': designation})
 
             file_name = name + " | " + contact + " | " + email
             folder_info = get_folder_id(designation)
@@ -66,27 +72,25 @@ def upload_details(request):
                 city = get_city(ip_address)
 
                 # CREATE RECORD IN SALESFORCE
-                sf_instance = SFConnectAPI()
-                result = sf_instance.create_record(object_name='Resume_Google_Drive_Link__c',
-                                                   data={'Name__c': name,
-                                                         'Contact_Number__c': contact,
-                                                         'Email__c': email,
-                                                         'Google_Drive_URL__c': file_url,
-                                                         'Position__c': designation,
-                                                         'Address__latitude__s': location[1],
-                                                         'Address__longitude__s': location[0],
-                                                         'City__c': city,
-                                                         })
+                result = sf.create_record(object_name='Resume_Google_Drive_Link__c',
+                                        data={'Name__c': name,
+                                              'Contact_Number__c': contact,
+                                              'Email__c': email,
+                                              'Google_Drive_URL__c': file_url,
+                                              'Position__c': designation,
+                                              'Address__latitude__s': location[1],
+                                              'Address__longitude__s': location[0],
+                                              'City__c': city,
+                                              })
                 if "id" in result.keys():
                     print(result["id"] + " created")
 
                 if result['success']:
+
                     messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
-                    msg_html = render_to_string(request,
-                                                "message.html", {
-                                                    "msg": "'Thank you for apply successfully in Cloudanalogy !!!'"
-                                                    })
-                    return {"msg_html": msg_html}
+                    return render(request,
+                                  "form.html",
+                                  {'designations': designations, 'designation': designation})
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
@@ -96,11 +100,13 @@ def upload_details(request):
     except Exception as ex:
         print("Exception:" + repr(ex))
         messages.error(request, 'Unable to process request.. try again later !!!')
+
     return HttpResponseRedirect('/')
 
-from django.http import HttpResponse
-from django.views.decorators.clickjacking import xframe_options_exempt
 
-@xframe_options_exempt
-def ok_to_load_in_a_frame(request):
-    return HttpResponse("This page is safe to load in a frame on any site.")
+# from django.http import HttpResponse
+# from django.views.decorators.clickjacking import xframe_options_exempt
+#
+# @xframe_options_exempt
+# def ok_to_load_in_a_frame(request):
+#     return HttpResponse("This page is safe to load in a frame on any site.")
