@@ -187,7 +187,7 @@ hr {
 	width: 100%;
 	height: 100%;
 	z-index: 9999;
-	background: url("https://i0.wp.com/www.dynamocoop.be/wp-content/uploads/2015/10/spin.gif") center no-repeat #fff;
+	background: url("https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif") center no-repeat #fff;
 }
 .form-wrapper input {
     box-sizing: border-box;
@@ -298,6 +298,12 @@ hr {
     to {bottom: 60px; opacity: 0;}
 }
 
+.drag-label {
+    background-color:grey;
+    text-align:center;
+    color:white;
+}
+
 input.text, input.title, input[type=email], input[type=password], input[type=tel], input[type=text], select, textarea {
     background-color: #fefefe !important;
     color: #000 !important;
@@ -355,22 +361,22 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
                         </label>
                         <input type="email" class="form-control" value="{{email}}" id="Email__c" name="Email__c" required />
                     </div>
-                    <div class="form-group color">
-                        <label for="id_resumeFile" ><span style="color:red;">*</span> Resume</label>
-                        <div>
-                            <p class="drag-label">drag and drop file
-                                <small><span class="glyphicon glyphicon-upload"> </span></small>
-                      <input type="file" value="{{file}}" class="form-control" id="id_resumeFile" name="resumeFile" required />
-                       </p>
-                        </div>
+                    <div class="form-group">
+                      <label for="Designation__c"><span style="color:red;">*</span> Position </label>
+                      <select class="form-control"  id="Designation__c" name="Designation__c" required>
+                          {% for item in designations %}
+                          <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
+                          {% endfor %}
+                      </select>
                     </div>
-                <div class="form-group">
-                  <label for="Designation__c"><span style="color:red;">*</span> Position applied for</label>
-                  <select class="form-control"  id="Designation__c" name="Designation__c" required>
-                      {% for item in designations %}
-                      <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
-                      {% endfor %}
-                  </select>
+                   <div class="form-group color">
+                    <label for="id_resumeFile" ><span style="color:red;">*</span> Resume (Only - doc, docx, pdf file)</label>
+                    <div>
+                        <p class="drag-label">You can also Drag & Drop file here
+                            <small><span class="glyphicon glyphicon-upload"> </span></small>
+                  <input type="file" value="{{resume}}" class="form-control" accept=".doc,.docx,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="id_resumeFile" name="resumeFile" required />
+                   </p>
+                    </div>
                 </div>
                 <button type="submit" id="submit_btn" class="btn btn-primary" >
                     Save

@@ -90,7 +90,7 @@ def upload_details(request):
                     messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
                     return render(request,
                                   "form.html",
-                                  {'designations': designations, 'designation': designation})
+                                  {'designations': designations, 'designation': DEFAULT_DESIGNATION})
                 else:
                     print("Record not created in salesforce:" + str(result))
                     messages.error(request, 'Unable to process request.. try again later !!!')
