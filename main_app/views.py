@@ -49,13 +49,29 @@ def upload_details(request):
                 messages.error(request, "Name field must contains only Characters")
                 return render(request,
                               "form.html",
-                              {'designations': designations, 'designation': designation})
+                              {'designations': designations, 'designation': designation, 'name': name, 'email': email,
+                               'contact': contact})
 
             elif not re.match('^[0-9]+$', contact) or len(contact) != 10:
                 messages.error(request, "Phone field must contains only Numbers and length should be 10")
                 return render(request,
                               "form.html",
-                              {'designations': designations, 'designation': designation})
+                              {'designations': designations, 'designation': designation, 'name': name, 'email': email,
+                               'contact': contact})
+
+            elif resume:
+                import magic
+                file_type = magic.from_buffer(resume.read(), mime=True)
+                print(file_type)
+                if file_type not in ['application/pdf', 'application/doc', 'application/docx', 'application/msword']:
+                    messages.error(request, "resume format is not appropriate.. Please select a pdf/doc/docx file")
+                    return render(request,
+                                  "form.html",
+                                  {'designations': designations,
+                                   'designation': designation,
+                                   'name': name,
+                                   'email': email,
+                                   'contact': contact})
 
             file_name = name + " | " + contact + " | " + email
             folder_info = get_folder_id(designation)
@@ -64,7 +80,10 @@ def upload_details(request):
                 gd_instance = GoogleDrive()
                 file_id, file_url = gd_instance.upload_file(file_name, media=resume, folder_id=folder_id)
 
-                ip_address = get_ip_address()
+                ip_address = get_ip_address(request)
+                # ip_address = request.META['REMOTE_ADDR']
+
+
                 if not ip_address or ip_address == '127.0.0.1':
                     ip_address = '122.176.52.148'
 
@@ -86,7 +105,6 @@ def upload_details(request):
                     print(result["id"] + " created")
 
                 if result['success']:
-
                     messages.success(request, 'Thank you for apply successfully in Cloudanalogy !!!')
                     return render(request,
                                   "form.html",
@@ -97,6 +115,7 @@ def upload_details(request):
             else:
                 print("google drive folder does not exists")
                 messages.error(request, 'Unable to process request.. try again later !!!')
+
     except Exception as ex:
         print("Exception:" + repr(ex))
         messages.error(request, 'Unable to process request.. try again later !!!')

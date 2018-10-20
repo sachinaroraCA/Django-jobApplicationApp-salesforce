@@ -3,12 +3,17 @@ from django.contrib.gis import geoip2
 """Make sure that django has the correct IP even if there is a proxy/CDN"""
 
 
-def get_ip_address():
+def get_ip_address(request):
     """Process a request"""
-    import requests
-    response = requests.request( "GET", "https://api.ipify.org/?format=json" )
-    ip_address = response.json().get( "ip" )
-    print("IP ADDRESS: {ip}".format(ip=ip_address))
+    if request.META['HTTP_CLIENT_IP']:
+        ip_address = request.META['HTTP_CLIENT_IP']
+    elif request.META["HTTP_X_FARWORDED_FOR"]:
+        ip_address = request.META["HTTP_X_FARWORDED_FOR"]
+    else:
+        import requests
+        response = requests.request( "GET", "https://api.ipify.org/?format=json" )
+        ip_address = response.json().get( "ip" )
+        print("IP ADDRESS: {ip}".format(ip=ip_address))
     return ip_address
 
 

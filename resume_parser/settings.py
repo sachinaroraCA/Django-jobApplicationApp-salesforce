@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'main_app',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'resume_parser.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['main_app/templates'],
+        'DIRS': [BASE_DIR+'/main_app/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,6 +136,12 @@ GEOIP_PATH = BASE_DIR + '/static/geolite_db'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+MEDIA_ROOT = BASE_DIR + '/media/'
+
+TEMPLATE_DIRS = (
+    BASE_DIR + '/templates/',
+)
+
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
@@ -145,3 +152,5 @@ GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 
 X_FRAME_OPTIONS = 'ALLOW-FROM http://wordpress-120068-572530.cloudwaysapps.com/'
 CSRF_COOKIE_SECURE = False
+
+CA_TESTING = False
