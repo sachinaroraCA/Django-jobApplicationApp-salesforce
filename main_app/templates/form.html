@@ -180,7 +180,7 @@ hr {
 
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
 .se-pre-con {
-	position: fixed;
+	position: absolute;
 	left: 0%;
 	top: 0%;
 	width: 100%;
@@ -313,6 +313,9 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
     color: white;
     padding: 10% 10% 10% 10%;
 }
+#usrform {
+position: relative!important;
+}
 </style>
 
 <body style="background-color: #313a43!important;">
@@ -333,7 +336,7 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
 <div>
 
     <div class="panel panel-default">
-        <div class="panel-body dark-bg " >
+        <div class="panel-body dark-bg" style="position:relative;" >
             <form role="form" id="usrform" name="usrform" action='/upload_details/' method="POST" enctype="multipart/form-data" >
                 <div id="spin_div" class="se-pre-con blur_spinner">
                 </div>
