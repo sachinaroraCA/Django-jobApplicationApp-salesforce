@@ -65,7 +65,6 @@ $(document).ready( function() {
     setTimeout(function() {
      $('#final_msg').fadeOut();
     }, 3600 );
-    document.getElementById('error_msg').html("Error");
 });
 </script>
 
@@ -335,9 +334,9 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
 
     <div class="panel panel-default">
         <div class="panel-body dark-bg " >
-            <div id="spin_div" class="se-pre-con blur_spinner">
-            </div>
             <form role="form" id="usrform" name="usrform" action='/upload_details/' method="POST" enctype="multipart/form-data" >
+                <div id="spin_div" class="se-pre-con blur_spinner">
+                </div>
                 {% csrf_token %}
                 <!--<div class="well well-sm">-->
                     <!--<small><span class="glyphicon glyphicon-user"> </span></small>-->
@@ -345,19 +344,19 @@ input.text, input.title, input[type=email], input[type=password], input[type=tel
                 <!--</div>-->
                     <div class="form-group">
                         <label for="name">
-                            <span style="color:red;">*</span> Your Name
+                            <span style="color:red;">*</span> Name
                         </label>
                         <input type="text" name="name" class="form-control" value="{{name}}" id="name" required />
                     </div>
                     <div class="form-group">
                         <label for="Contact_Number__c">
-                            <span style="color:red;">*</span> Contact no.
+                            <span style="color:red;">*</span> Phone
                         </label>
                         <input type="tel" class="form-control" value="{{phone}}" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+"  name="Contact_Number__c" required />
                     </div>
                     <div class="form-group">
                         <label for="Email__c">
-                            <span style="color:red;">*</span> Your Email
+                            <span style="color:red;">*</span> Email
                         </label>
                         <input type="email" class="form-control" value="{{email}}" id="Email__c" name="Email__c" required />
                     </div>
