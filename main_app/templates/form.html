@@ -349,27 +349,47 @@ position: relative!important;
                         <label for="name">
                             <span style="color:red;">*</span> Name
                         </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon"></span>
+                            </span>
                         <input type="text" name="name" class="form-control" value="{{name}}" id="name" required />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="Contact_Number__c">
+                        <label for="name">
                             <span style="color:red;">*</span> Phone
                         </label>
-                        <input type="tel" class="form-control" value="{{phone}}" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+"  name="Contact_Number__c" required />
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                +91
+                            </span>
+                            <input type="tel" class="form-control" value="{{phone}}" minlength="10" maxlength="10" id="Contact_Number__c" pattern="[0-9]+"  name="Contact_Number__c" required />
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="Email__c">
                             <span style="color:red;">*</span> Email
                         </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon"></span>
+                            </span>
                         <input type="email" class="form-control" value="{{email}}" id="Email__c" name="Email__c" required />
+                        </div>
                     </div>
                     <div class="form-group">
                       <label for="Designation__c"><span style="color:red;">*</span> Position </label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon"></span>
+                            </span>
                       <select class="form-control"  id="Designation__c" name="Designation__c" required>
                           {% for item in designations %}
                           <option {% ifequal item designation %}selected{% endifequal %}>{{item}}</option>
                           {% endfor %}
                       </select>
+                        </div>
                     </div>
                    <div class="form-group color">
                     <label for="id_resumeFile" ><span style="color:red;">*</span> Resume (Only - doc, docx, pdf file)</label>
