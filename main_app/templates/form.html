@@ -63,7 +63,7 @@ $(document).ready( function() {
         }
     });
     setTimeout(function() {
-     $('#final_msg').fadeOut();
+    $('#final_msg').fadeOut();
     }, 3600 );
 });
 </script>
@@ -195,7 +195,7 @@ hr {
     padding:2% 5% 2% 5%;
 }
 .message-position {
-    position: absolute;
+    position: relative;
     width:100%;
 }
 .blur_spinner {
@@ -323,16 +323,6 @@ position: relative!important;
 	<!--<div id="img" ><span class="glyphicon glyphicon-warning-sign"> </span></div>-->
 	<!--<div id="desc"></div>-->
 <!--</div>-->
-    <div class="message-position">
-    {% if messages %}
-    {% for msg in messages %}
-        <div id="final_msg" class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
-            <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
-            {{msg.tags|title}}: {{msg.message}}
-        </div>
-    {% endfor %}
-    {% endif %}
-    </div>
 <div>
 
     <div class="panel panel-default">
@@ -404,6 +394,16 @@ position: relative!important;
                     Save
                 </button>
             </form>
+                <div class="message-position">
+                    {% if messages %}
+                    {% for msg in messages %}
+                        <div id="final_msg" class="alert alert-{% ifequal msg.tags 'error' %}danger{% else %}{{msg.tags}}{% endifequal %} alert-dismissable">
+                            <button type="button" id="alertbtn" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+                            {{msg.tags|title}}: {{msg.message}}
+                        </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
         </div>
     </div>
 </div>
