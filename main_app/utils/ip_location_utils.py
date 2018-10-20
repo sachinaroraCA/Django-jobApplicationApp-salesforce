@@ -5,15 +5,16 @@ from django.contrib.gis import geoip2
 
 def get_ip_address(request):
     """Process a request"""
-    if request.META['HTTP_CLIENT_IP']:
-        ip_address = request.META['HTTP_CLIENT_IP']
-    elif request.META["HTTP_X_FARWORDED_FOR"]:
-        ip_address = request.META["HTTP_X_FARWORDED_FOR"]
+
+    if request.META["HTTP_X_FORWARDED_FOR"]:
+        ip_address = request.META["HTTP_X_FORWARDED_FOR"]
+    elif request.META["REMOTE_ADDR"]:
+        ip_address = request.META["REMOTE_ADDR"]
     else:
         import requests
         response = requests.request( "GET", "https://api.ipify.org/?format=json" )
         ip_address = response.json().get( "ip" )
-        print("IP ADDRESS: {ip}".format(ip=ip_address))
+    print("IP ADDRESS: {ip}".format(ip=ip_address))
     return ip_address
 
 
