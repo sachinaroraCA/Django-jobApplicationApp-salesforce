@@ -14,7 +14,6 @@
   latest release (https://github.com/enyo/dropzone/releases/latest), and
   host them yourself!
 -->
-{% include "message.html" %}
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 
@@ -23,7 +22,6 @@
 <script type="text/javascript">
 
 $(document).ready( function() {
-    $("#")
 
     $("#submit_btn").click( function(event) {
         var error = null;
@@ -41,7 +39,7 @@ $(document).ready( function() {
             error = "Enter a valid Phone number field !!! ";
             phone.focus();
         }
-        else if(!email.value.match(mailformat))
+        else if((!email.value.match(mailformat)) || email == "")
         {
             error = "Email field not filled or invalid field value !!!";
             email.focus();
@@ -52,26 +50,41 @@ $(document).ready( function() {
         }
         else {
             error = null;
+            alert("no error");
         }
         if (error == null) {
             document.getElementById('spin_div').style.visibility = 'visible';
-            // document.getElementById("usrform").submit();
+            //document.getElementById("usrform").submit();
+            alert("AJAX operation");
             $.ajax({
             type:"POST",
             data:{"name":name,"phone":phone,"email":email,"resume":resume},
+            processData: false,
+            contentType: false,
             url: "/upload_details/",
-            success:function(resp){
-            console.log(resp);
-            $("#error_message").append(resp);
-            }
+            success: function(json) {
+                 alert("success");
+             },
+             error: function(error) {
+                alert(error);
+             },
+
+
+            // success:function(resp){
+            // console.log(resp);
+            // $("#error_message").append(resp);
+            // $('#error_message').html(newData);
+            // }
             });
 
         }
         else {
-         var x = document.getElementById("toast")
-            x.className = "show";
-            $("#desc").html(error);
-		   setTimeout(function(){ x.className = x.className.replace("show", ""); },3000);
+         var x = document.getElementById("error_message")
+            document.getElementById('spin_div').style.visibility = 'visible';
+            $("#error_message").html(error);
+		       setTimeout(function() {
+     $('#error_message').fadeOut();
+    }, 1800 );
         }
     });
     setTimeout(function() {
@@ -325,6 +338,9 @@ body, input, textarea, select {
 	<!--<div id="img" ><span class="glyphicon glyphicon-warning-sign"> </span></div>-->
 	<!--<div id="desc"></div>-->
 <!--</div>-->
+    <div id="error_message" class="alert alert-danger alert-dismissable hide message-position">
+        <button type="button" class="close" onclick="return close_message();" aria-hidden="true" data-dismiss="alert">&times;</button>
+    </div>
     <div class="message-position">
     {% if messages %}
     {% for msg in messages %}
@@ -340,9 +356,7 @@ body, input, textarea, select {
     </div>
     <div class="panel panel-default">
         <div class="panel-body dark-bg" >
-            <div id = "error_message">
-            </div>
-            <form role="form" id="usrform" name="usrform" action="/upload_details/" method="POST" enctype="multipart/form-data" >
+            <form role="form" id="usrform" action="/upload_details/" METHOD="post" name="usrform" enctype="multipart/form-data" >
                 {% csrf_token %}
                 <!--<div class="well well-sm">-->
                     <!--<small><span class="glyphicon glyphicon-user"> </span></small>-->

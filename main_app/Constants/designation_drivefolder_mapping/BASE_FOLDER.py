@@ -1,1 +1,1 @@
-folder_id = '1goAS50sqgqfogd9B03zA166tCB0BMq1x'
+folder_id = "************" # Id of the base folder in google drive where you want to store all the resumes

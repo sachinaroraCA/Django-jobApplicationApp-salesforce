@@ -66,3 +66,4 @@ def add_entry_of_folder(folder_type, folder_name, folder_id):
         else:
             success = False
     return success
+
